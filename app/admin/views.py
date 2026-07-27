@@ -16,11 +16,35 @@ class UserAdmin(ModelView, model=User):
     name = "User"
     name_plural = "Users"
     icon = "fa-solid fa-users"
-    column_list = [User.id, User.telegram_id, User.name, User.phone, User.status, User.created_at]
-    column_searchable_list = [User.name, User.phone, User.status]
-    column_filters = [User.status, User.created_at]
-    column_sortable_list = [User.id, User.telegram_id, User.created_at]
-    form_columns = [User.telegram_id, User.name, User.phone, User.status]
+
+    column_list = [
+        User.id,
+        User.telegram_id,
+        User.name,
+        User.phone,
+        User.status,
+        User.created_at,
+    ]
+
+    column_searchable_list = [
+        User.name,
+        User.phone,
+        User.status,
+    ]
+
+    column_sortable_list = [
+        User.id,
+        User.telegram_id,
+        User.created_at,
+    ]
+
+    form_columns = [
+        User.telegram_id,
+        User.name,
+        User.phone,
+        User.status,
+    ]
+
     page_size = 50
     page_size_options = [25, 50, 100, 200]
 
@@ -29,6 +53,7 @@ class ChallengeAdmin(ModelView, model=Challenge):
     name = "Challenge"
     name_plural = "Challenges"
     icon = "fa-solid fa-calendar-check"
+
     column_list = [
         Challenge.id,
         Challenge.day,
@@ -39,9 +64,19 @@ class ChallengeAdmin(ModelView, model=Challenge):
         Challenge.sent_at,
         Challenge.created_at,
     ]
-    column_searchable_list = [Challenge.title, Challenge.description]
-    column_filters = [Challenge.day, Challenge.is_active, Challenge.send_time, Challenge.deadline]
-    column_sortable_list = [Challenge.day, Challenge.send_time, Challenge.deadline, Challenge.created_at]
+
+    column_searchable_list = [
+        Challenge.title,
+        Challenge.description,
+    ]
+
+    column_sortable_list = [
+        Challenge.day,
+        Challenge.send_time,
+        Challenge.deadline,
+        Challenge.created_at,
+    ]
+
     form_columns = [
         Challenge.day,
         Challenge.title,
@@ -51,6 +86,7 @@ class ChallengeAdmin(ModelView, model=Challenge):
         Challenge.is_active,
         Challenge.sent_at,
     ]
+
     page_size = 50
     page_size_options = [25, 50, 100]
 
@@ -59,6 +95,7 @@ class SubmissionAdmin(ModelView, model=Submission):
     name = "Submission"
     name_plural = "Submissions"
     icon = "fa-solid fa-inbox"
+
     column_list = [
         Submission.id,
         Submission.user,
@@ -67,20 +104,40 @@ class SubmissionAdmin(ModelView, model=Submission):
         Submission.submitted_at,
         Submission.is_late,
     ]
-    column_searchable_list = [Submission.answer]
-    column_filters = [Submission.challenge_id, Submission.user_id, Submission.is_late, Submission.submitted_at]
-    column_sortable_list = [Submission.id, Submission.submitted_at, Submission.is_late]
-    form_columns = [Submission.user, Submission.challenge, Submission.answer, Submission.submitted_at, Submission.is_late]
+
+    column_searchable_list = [
+        Submission.answer,
+    ]
+
+    column_sortable_list = [
+        Submission.id,
+        Submission.submitted_at,
+        Submission.is_late,
+    ]
+
+    form_columns = [
+        Submission.user,
+        Submission.challenge,
+        Submission.answer,
+        Submission.submitted_at,
+        Submission.is_late,
+    ]
+
     can_create = True
     can_edit = True
     can_delete = True
+
     page_size = 50
     page_size_options = [25, 50, 100, 200]
 
 
 def setup_admin(app: FastAPI) -> Admin:
     settings = get_settings()
-    authentication_backend = AdminAuth(secret_key=settings.secret_key)
+
+    authentication_backend = AdminAuth(
+        secret_key=settings.secret_key
+    )
+
     admin = Admin(
         app=app,
         engine=async_engine,
@@ -89,8 +146,10 @@ def setup_admin(app: FastAPI) -> Admin:
         authentication_backend=authentication_backend,
         base_url="/admin",
     )
+
     admin.add_view(DashboardView)
     admin.add_view(UserAdmin)
     admin.add_view(ChallengeAdmin)
     admin.add_view(SubmissionAdmin)
+
     return admin
