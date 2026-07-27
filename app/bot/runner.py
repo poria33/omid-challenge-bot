@@ -1,8 +1,6 @@
 from aiogram import Bot, Dispatcher
 
 from app.core.config import get_settings
-from app.bot.routers import router
-from app.scheduler.runner import start_scheduler
 
 
 settings = get_settings()
@@ -11,19 +9,23 @@ bot = Bot(token=settings.bot_token)
 
 dp = Dispatcher()
 
-# ثبت handler ها
-dp.include_router(router)
+
+def register_routers():
+    from app.bot.handlers.registration import router as registration_router
+    from app.bot.handlers.submissions import router as submissions_router
+
+    dp.include_router(registration_router)
+    dp.include_router(submissions_router)
 
 
 async def run_bot():
+
+    register_routers()
+
+    from app.scheduler.runner import start_scheduler
+
+    start_scheduler()
+
     print("Bot started...")
 
-    await start_scheduler()
-
     await dp.start_polling(bot)
-
-
-if __name__ == "__main__":
-    import asyncio
-
-    asyncio.run(run_bot())
