@@ -8,10 +8,11 @@ from app.database.models.challenge import Challenge
 from app.database.models.user import User
 from app.database.session import async_session_factory
 from app.core.logger import logger
-from app.bot.runner import bot
 
 
 async def send_due_challenges():
+    from app.bot.runner import bot
+
     async with async_session_factory() as session:
 
         now = datetime.now()
