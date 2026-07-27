@@ -1,0 +1,5 @@
+for admin:
+    uvicorn app.main:app --reload
+
+for bot:
+    python -m app.bot.runner
