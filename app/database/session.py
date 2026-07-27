@@ -11,7 +11,7 @@ from app.database.base import Base
 
 
 settings = get_settings()
-
+print("DATABASE:", settings.database_url)
 _connect_args: dict[str, Any] = {}
 if settings.async_database_url.startswith("sqlite+aiosqlite"):
     _connect_args = {"check_same_thread": False}

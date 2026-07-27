@@ -96,7 +96,10 @@ def get_settings() -> Settings:
     return Settings(
         app_name=os.getenv("APP_NAME", "Challenge Omid"),
         bot_token=os.getenv("BOT_TOKEN", ""),
-        database_url=os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./challenge_omid.db"),
+    database_url=os.getenv(
+        "DATABASE_URL",
+        "sqlite+aiosqlite:///C:/Users/Asus/OneDrive/Desktop/omid%20challenge%20bot/challenge.db"
+    ),
         max_users=_read_int("MAX_USERS", 400),
         timezone=os.getenv("TIMEZONE", "Asia/Tehran"),
         admin_ids=_parse_admin_ids(os.getenv("ADMIN_IDS")),
