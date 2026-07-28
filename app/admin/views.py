@@ -145,6 +145,7 @@ def setup_admin(app: FastAPI) -> Admin:
         title=f"{settings.app_name} Admin",
         authentication_backend=authentication_backend,
         base_url="/admin",
+        templates_dir=None,
     )
 
     admin.add_view(DashboardView)
