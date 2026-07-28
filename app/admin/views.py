@@ -145,7 +145,7 @@ def setup_admin(app: FastAPI) -> Admin:
         title=f"{settings.app_name} Admin",
         authentication_backend=authentication_backend,
         base_url="/admin",
-        statics_dir="/app/.venv/lib/python3.13/site-packages/sqladmin/statics", 
+        statics_dir="/app/.venv/lib/python3.13/site-packages/sqladmin/statics",
     )
 
     admin.add_view(DashboardView)
