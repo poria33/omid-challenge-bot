@@ -5,7 +5,6 @@ import logging
 from typing import AsyncIterator
 
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, RedirectResponse
 
 from app.admin.views import setup_admin
@@ -35,11 +34,6 @@ def create_app() -> FastAPI:
         title=settings.app_name,
         version="1.0.0",
         lifespan=lifespan,
-    )
-    application.mount(
-        "/admin/static",
-        StaticFiles(directory="static"),
-        name="static",
     )
     setup_admin(application)
 
